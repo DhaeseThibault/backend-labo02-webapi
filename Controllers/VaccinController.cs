@@ -16,6 +16,14 @@ using AutoMapper;
 
 namespace backend_labo02_webapi.Controllers
 {
+
+    // ! Vergeet de dotnet packages niet toe te voegen(csv, automapper, versioning). Deze vind je hier onder. Uit te voeren in terminal
+    // dotnet add package CsvHelper --version 23.0.0
+    // dotnet add package Microsoft.AspnetCore.Mvc.Versioning
+    // dotnet add package AutoMapper
+    // dotnet add package AutoMapper.Extentions.Microsoft.DependencyInjection
+    // Todo: Caching gaan we komend labo bekijken.
+
     // ! Dit zorgt voor de validatie maar is niet verplicht
     [ApiController]
     [ApiVersion("1.0")]
@@ -30,7 +38,7 @@ namespace backend_labo02_webapi.Controllers
         private IMapper _mapper;
         public VaccinController(IOptions<CSVSettings> settings, IMapper mapper)
         {
-            // ! werken hier met depencie injection
+            // ! werken hier met dependencie injection
             _settings = settings.Value;
             _mapper = mapper;
 
