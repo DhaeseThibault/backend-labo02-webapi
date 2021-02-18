@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using backend_labo02_webapi.Models;
+using backend_labo02_webapi.Configuration;
 
 namespace backend_labo02_webapi.Controllers
 {
@@ -13,20 +15,18 @@ namespace backend_labo02_webapi.Controllers
     [Route("api")]
     public class VaccinController : ControllerBase
     {
+        private readonly CSVSettings _settings;
         private static List<VaccinType> _vaccinTypes;
         private static List<VaccinationLocation> _vaccinationLocations;
         private static List<VaccinationRegistration> _registrations;
-        public VaccinController()
+        public VaccinController(IOptions<CSVSettings> settings)
         {
+            // ! werken hier met depencie injection
+            _settings = settings.Value;
 
             if (_vaccinTypes == null)
             {
-                _vaccinTypes = new List<VaccinType>();
-                _vaccinTypes.Add(new VaccinType()
-                {
-                    VaccinTypeId = Guid.NewGuid(),
-                    Name = "Moderna"
-                });
+                ReadCSVVaccins();
             }
 
             if (_vaccinationLocations == null)
@@ -43,6 +43,10 @@ namespace backend_labo02_webapi.Controllers
                 _registrations = new List<VaccinationRegistration>();
             }
 
+        }
+
+        private List<VaccinType> ReadCSVVaccins(){
+            return null;
         }
 
         [HttpGet]

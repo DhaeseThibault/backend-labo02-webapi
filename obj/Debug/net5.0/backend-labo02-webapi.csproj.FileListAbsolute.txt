@@ -27,3 +27,4 @@ D:\MTS4-2MCT1-WAD\BackEndDev\Labo\Week02-WebApi-DTO-Val-Vers\backend-labo02-weba
 D:\MTS4-2MCT1-WAD\BackEndDev\Labo\Week02-WebApi-DTO-Val-Vers\backend-labo02-webapi\obj\Debug\net5.0\ref\backend-labo02-webapi.dll
 D:\MTS4-2MCT1-WAD\BackEndDev\Labo\Week02-WebApi-DTO-Val-Vers\backend-labo02-webapi\obj\Debug\net5.0\backend-labo02-webapi.pdb
 D:\MTS4-2MCT1-WAD\BackEndDev\Labo\Week02-WebApi-DTO-Val-Vers\backend-labo02-webapi\obj\Debug\net5.0\backend-labo02-webapi.genruntimeconfig.cache
+D:\MTS4-2MCT1-WAD\BackEndDev\Labo\Week02-WebApi-DTO-Val-Vers\backend-labo02-webapi\bin\Debug\net5.0\CsvHelper.dll

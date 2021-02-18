@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using backend_labo02_webapi.Configuration;
 
 namespace backend_labo02_webapi
 {
@@ -26,7 +27,8 @@ namespace backend_labo02_webapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            // ! Deze service zorgt ervoor dat wanneer iemand om een object van CSVSettings vraagt. Dat er hiervan één aangemaakt wordt achter de schermen
+            services.Configure<CSVSettings>(Configuration.GetSection("CSVSettings"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
