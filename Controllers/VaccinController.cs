@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +9,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using backend_labo02_webapi.Models;
 using backend_labo02_webapi.Configuration;
+using CsvHelper.Configuration;
+using CsvHelper;
 
 namespace backend_labo02_webapi.Controllers
 {
@@ -26,17 +30,12 @@ namespace backend_labo02_webapi.Controllers
 
             if (_vaccinTypes == null)
             {
-                ReadCSVVaccins();
+                _vaccinTypes = ReadCSVVaccins();
             }
 
             if (_vaccinationLocations == null)
             {
-                _vaccinationLocations = new List<VaccinationLocation>();
-                _vaccinationLocations.Add(new VaccinationLocation()
-                {
-                    VaccinationLocationId = Guid.NewGuid(),
-                    Name = "Kortrijk EXPO"
-                });
+                _vaccinationLocations = ReadCSVLocations();
             }
             if (_registrations == null)
             {
@@ -45,8 +44,40 @@ namespace backend_labo02_webapi.Controllers
 
         }
 
-        private List<VaccinType> ReadCSVVaccins(){
-            return null;
+        private List<VaccinationLocation> ReadCSVLocations()
+        {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+                Delimiter = ";"
+            };
+
+            using (var reader = new StreamReader(_settings.CSVLocations))
+            {
+                using (var csv = new CsvReader(reader, config))
+                {
+                    var records = csv.GetRecords<VaccinationLocation>();
+                    return records.ToList<VaccinationLocation>();
+                }
+            }
+        }
+
+        private List<VaccinType> ReadCSVVaccins()
+        {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+                Delimiter = ";"
+            };
+
+            using (var reader = new StreamReader(_settings.CSVVaccins))
+            {
+                using (var csv = new CsvReader(reader, config))
+                {
+                    var records = csv.GetRecords<VaccinType>();
+                    return records.ToList<VaccinType>();
+                }
+            }
         }
 
         [HttpGet]
