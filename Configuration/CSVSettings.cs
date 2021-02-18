@@ -6,5 +6,6 @@ namespace backend_labo02_webapi.Configuration
     {
         public string CSVLocations { get; set; }
         public string CSVVaccins { get; set; }
+        public string CSVRegistrations { get; set; }
     }
 }

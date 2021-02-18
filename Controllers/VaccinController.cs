@@ -39,9 +39,44 @@ namespace backend_labo02_webapi.Controllers
             }
             if (_registrations == null)
             {
-                _registrations = new List<VaccinationRegistration>();
+                _registrations = ReadCSVRegistrations();
             }
 
+        }
+
+        private void SaveRegistrations()
+        {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+                Delimiter = ";"
+            };
+
+            using (var writer = new StreamWriter(_settings.CSVRegistrations))
+            {
+                using (var csv = new CsvWriter(writer, config))
+                {
+                    csv.WriteRecords(_registrations);
+                }
+            }
+        }
+
+        private List<VaccinationRegistration> ReadCSVRegistrations()
+        {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+                Delimiter = ";"
+            };
+
+            using (var reader = new StreamReader(_settings.CSVRegistrations))
+            {
+                using (var csv = new CsvReader(reader, config))
+                {
+                    var records = csv.GetRecords<VaccinationRegistration>();
+                    return records.ToList<VaccinationRegistration>();
+                }
+            }
         }
 
         private List<VaccinationLocation> ReadCSVLocations()
@@ -82,9 +117,16 @@ namespace backend_labo02_webapi.Controllers
 
         [HttpGet]
         [Route("registrations")]
-        public ActionResult<List<VaccinationRegistration>> GetRegistrations()
+        public ActionResult<List<VaccinationRegistration>> GetRegistrations(string date = "")
         {
-            return new OkObjectResult(_registrations);
+            if (string.IsNullOrEmpty(date))
+            {
+                return new OkObjectResult(_registrations);
+            }
+            else
+            {
+                return new OkObjectResult(_registrations.Where(r => r.VaccinationDate == DateTime.Parse(date)).ToList<VaccinationRegistration>());
+            }
         }
 
         [HttpPost]
@@ -99,6 +141,7 @@ namespace backend_labo02_webapi.Controllers
             {
                 newRegistration.VaccinationRegistrationId = Guid.NewGuid();
                 _registrations.Add(newRegistration);
+                SaveRegistrations();
                 return new OkObjectResult(newRegistration);
             }
         }
