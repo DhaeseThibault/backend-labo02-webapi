@@ -8,14 +8,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using backend_labo02_webapi.Models;
+using backend_labo02_webapi.DTO;
 using backend_labo02_webapi.Configuration;
 using CsvHelper.Configuration;
 using CsvHelper;
+using AutoMapper;
 
 namespace backend_labo02_webapi.Controllers
 {
     // ! Dit zorgt voor de validatie maar is niet verplicht
     [ApiController]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [Route("api")]
     public class VaccinController : ControllerBase
     {
@@ -23,10 +27,12 @@ namespace backend_labo02_webapi.Controllers
         private static List<VaccinType> _vaccinTypes;
         private static List<VaccinationLocation> _vaccinationLocations;
         private static List<VaccinationRegistration> _registrations;
-        public VaccinController(IOptions<CSVSettings> settings)
+        private IMapper _mapper;
+        public VaccinController(IOptions<CSVSettings> settings, IMapper mapper)
         {
             // ! werken hier met depencie injection
             _settings = settings.Value;
+            _mapper = mapper;
 
             if (_vaccinTypes == null)
             {
@@ -113,6 +119,14 @@ namespace backend_labo02_webapi.Controllers
                     return records.ToList<VaccinType>();
                 }
             }
+        }
+
+        [HttpGet]
+        [Route("registrations")]
+        [MapToApiVersion("2.0")]
+        public ActionResult<List<VaccinationRegistrationDTO>> GetRegistrationsSmall()
+        {
+            return new OkObjectResult(_mapper.Map<List<VaccinationRegistrationDTO>>(_registrations));
         }
 
         [HttpGet]
