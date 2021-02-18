@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "9vMQNUtoyBDUSIo2pAu4HPCJ6pm+E2DM4ad/G8do0ufU2TZerXDVvqE250zUKwVCmBNKo+vp1Z2/Pk+c0pXjEA==",
+  "dgSpecHash": "XbQfC/nW4jJ/fQ3j5ZFJi9xm1mRoYvrputXAO6yDh4TLmjhQUV/Ujri7o+jPMMjVvoNzY32Xcqz5lh+2VzY7Jg==",
   "success": true,
   "projectFilePath": "D:\\MTS4-2MCT1-WAD\\BackEndDev\\Labo\\Week02-WebApi-DTO-Val-Vers\\backend-labo02-webapi\\backend-labo02-webapi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\niels\\.nuget\\packages\\csvhelper\\23.0.0\\csvhelper.23.0.0.nupkg.sha512",
     "C:\\Users\\niels\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\niels\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\niels\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
