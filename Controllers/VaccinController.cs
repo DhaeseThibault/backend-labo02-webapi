@@ -1,0 +1,87 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using backend_labo02_webapi.Models;
+
+namespace backend_labo02_webapi.Controllers
+{
+    // ! Dit zorgt voor de validatie maar is niet verplicht
+    [ApiController]
+    [Route("api")]
+    public class VaccinController : ControllerBase
+    {
+        private static List<VaccinType> _vaccinTypes;
+        private static List<VaccinationLocation> _vaccinationLocations;
+        private static List<VaccinationRegistration> _registrations;
+        public VaccinController()
+        {
+
+            if (_vaccinTypes == null)
+            {
+                _vaccinTypes = new List<VaccinType>();
+                _vaccinTypes.Add(new VaccinType()
+                {
+                    VaccinTypeId = Guid.NewGuid(),
+                    Name = "Moderna"
+                });
+            }
+
+            if (_vaccinationLocations == null)
+            {
+                _vaccinationLocations = new List<VaccinationLocation>();
+                _vaccinationLocations.Add(new VaccinationLocation()
+                {
+                    VaccinationLocationId = Guid.NewGuid(),
+                    Name = "Kortrijk EXPO"
+                });
+            }
+            if (_registrations == null)
+            {
+                _registrations = new List<VaccinationRegistration>();
+            }
+
+        }
+
+        [HttpGet]
+        [Route("registrations")]
+        public ActionResult<List<VaccinationRegistration>> GetRegistrations()
+        {
+            return new OkObjectResult(_registrations);
+        }
+
+        [HttpPost]
+        [Route("registration")]
+        public ActionResult<VaccinationRegistration> AddRegistration(VaccinationRegistration newRegistration)
+        {
+            if (newRegistration == null || _vaccinTypes.Where(v => v.VaccinTypeId == newRegistration.VaccinTypeId).Count() == 0 || _vaccinationLocations.Where(l => l.VaccinationLocationId == newRegistration.VaccinationLocationId).Count() == 0)
+            {
+                return new BadRequestResult();
+            }
+            else
+            {
+                newRegistration.VaccinationRegistrationId = Guid.NewGuid();
+                _registrations.Add(newRegistration);
+                return new OkObjectResult(newRegistration);
+            }
+        }
+
+        [HttpGet]
+        [Route("vaccins")]
+        public ActionResult<List<VaccinType>> getVaccins()
+        {
+            return new OkObjectResult(_vaccinTypes);
+        }
+
+        [HttpGet]
+        [Route("locations")]
+        public ActionResult<List<VaccinationLocation>> getLocations()
+        {
+            return new OkObjectResult(_vaccinationLocations);
+        }
+
+
+    }
+}
