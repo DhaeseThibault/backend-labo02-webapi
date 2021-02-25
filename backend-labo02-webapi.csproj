@@ -1,8 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>backend_labo02_webapi</RootNamespace>
+    <UserSecretsId>8b5e9f95b5a5341390b85892159bb31d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
